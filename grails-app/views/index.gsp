@@ -13,7 +13,7 @@
         <p class="lead text-muted">Simplify your links</p>
 
 
-        <form>
+        <form id="shortenForm">
             <div align="center" class="col-lg-12 center-block form-group">
 
                 <input type="url" id="url" class="url-field form-control" placeholder="Your Original URL here" id="url" />
@@ -23,7 +23,7 @@
 
         </form>
         <div class="success-shorten"></div>
-        <form class="expand-form">
+        <form class="expand-form" id="expandUrlForm">
             <div align="center" class="col-lg-12 center-block form-group">
 
                 <input type="url" id="shortUrl" class="url-field form-control" placeholder="Your Shortened URL here" />

@@ -7,7 +7,7 @@ import grails.transaction.Transactional
 class UrlShortenerService {
     GrailsApplication grailsApplication
     def googleUrlShortenerService
-    def create(url) {
+    def create(url, userId = 0) {
         try{
             def dbUrlObject = Urls.findByUrl(url)
             def shortUrl
@@ -20,17 +20,17 @@ class UrlShortenerService {
                 Urls newUrl = new Urls()
                 newUrl.shortUrl  = urlObject.shortUrl
                 newUrl.url = url
-                newUrl.userId = 1
+                newUrl.userId = userId
                 newUrl.save (flush:true, failOnError: true)
             }
             return [shortUrl: shortUrl]
         }
         catch (Exception ex){
-            return ["error": "Service Unavailable"]
+            throw new Exception(ex.getMessage())
         }
     }
 
-    def expand(shortUrl){
+    def expand(shortUrl,userId = 0){
         try{
             def dbUrlObject = Urls.findByShortUrl(shortUrl)
             def longUrl
@@ -39,18 +39,21 @@ class UrlShortenerService {
             }
             else{
                 def urlObject = googleUrlShortenerService.expand(shortUrl)
-                fullUrl = urlObject.longUrl
+                longUrl = urlObject.longUrl
                 Urls newUrl = new Urls()
                 newUrl.shortUrl  = shortUrl
                 newUrl.url = fullUrl
-                newUrl.userId = 1
+                newUrl.userId = userId
                 newUrl.save (flush:true, failOnError: true)
             }
             return [longUrl: longUrl]
         }
         catch (Exception ex){
-            return ["error": "Service Unavailable"]
+            throw new Exception(ex.getMessage())
         }
     }
 
+    def getUserUrls(userId){
+         Urls.findAllByUserId(userId)
+    }
 }

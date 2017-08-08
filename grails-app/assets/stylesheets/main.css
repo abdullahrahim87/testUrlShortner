@@ -592,3 +592,10 @@ img.grails-logo {
     color: #FFF;
     margin-top:20px;
 }
+.grid-header{
+    background: #2b542c;
+    color: #FFF;
+}
+.url-grid .row{
+    border-bottom: 1px solid #8c8c8c;
+}
