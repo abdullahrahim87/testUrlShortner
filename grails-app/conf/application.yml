@@ -118,9 +118,26 @@ environments:
              testOnReturn: true
              validationQuery: "SELECT 1"
     test:
+        googleService:
+                    url: https://www.googleapis.com/urlshortener/v1/url
+                    apiKey: AIzaSyBYz_6MEUITmLi6dzRye6n2Uo1XUcReRtk
         dataSource:
-            dbCreate: update
-            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+                   dbCreate: update
+                   pooled: true
+                   url: jdbc:mysql://127.0.0.1:3306/urlshortner
+                   username: root
+                   password:
+                   driverClassName: com.mysql.jdbc.Driver
+                   dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+                   properties:
+                     maxActive: -1
+                     minEvictableIdleTimeMillis: 1800000
+                     timeBetweenEvictionRunsMillis: 1800000
+                     numTestsPerEvictionRun: 3
+                     testOnBorrow: true
+                     testWhileIdle: true
+                     testOnReturn: true
+                     validationQuery: "SELECT 1"
     production:
         dataSource:
             dbCreate: none
