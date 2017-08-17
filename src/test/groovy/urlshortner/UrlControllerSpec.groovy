@@ -1,6 +1,7 @@
 package urlshortner
 
 import grails.test.mixin.TestFor
+import grails.test.mixin.web.ControllerUnitTestMixin
 import spock.lang.Specification
 
 /**
@@ -15,8 +16,13 @@ class UrlControllerSpec extends Specification {
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
+    void "test for invalid JSON"() {
+        when:
+        request.method = "post"
+        request.json = "{url:'http://google.com'}"
+        controller.create()
+        then:
+        response.status == 400
     }
+
 }

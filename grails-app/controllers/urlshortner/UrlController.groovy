@@ -2,6 +2,7 @@ package urlshortner
 
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
+import org.grails.web.converters.exceptions.ConverterException
 import org.springframework.http.HttpStatus
 @Secured(['permitAll()'])
 class UrlController {
@@ -20,6 +21,9 @@ class UrlController {
             else{
                 throwExceptionMsg(["error":message(code:  "urlshortner.please.enterurl")])
             }
+        }
+        catch(ConverterException ex){
+            throwExceptionMsg(["error":message(code:  "urlshortner.please.invalid.json")])
         }
         catch (Exception ex){
             log.info(ex.getMessage())
@@ -42,6 +46,9 @@ class UrlController {
             }else{
                 throwExceptionMsg(["error":message(code:  "urlshortner.please.enterurl")])
             }
+        }
+        catch (ConverterException ex){
+            throwExceptionMsg(["error":message(code:  "urlshortner.please.invalid.json")])
         }
         catch (Exception ex){
             log.info(ex.getMessage())
